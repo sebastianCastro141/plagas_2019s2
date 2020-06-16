@@ -1,0 +1,56 @@
+import elementos.*
+import plagas.*
+test "Elementos" {
+	/// Hogares
+	const hogar1 = new Hogar(nivelDeMugre = 14, confort = 30)
+	const hogar2 = new Hogar (nivelDeMugre = 12, confort = 20)
+	/// Huertas
+	const huerta1 = new Huerta(capacidadDeProduccion = 100, nivel = 50)
+	const huerta2 = new Huerta(capacidadDeProduccion = 40, nivel = 50)
+	/// mascotas 
+	const mascota1 = new Mascotas (nivelDeSalud = 500)
+	const mascota2 = new Mascotas (nivelDeSalud = 230)
+	const mascota3 = new Mascotas (nivelDeSalud= 260)
+	////Barrio
+	const barrio1 = new Barrios(listaDeElementos=[hogar1,hogar2,huerta1,huerta2,mascota1,mascota2,mascota3])
+	
+	/// prueba de si es bueno o no el elemento
+	assert.that(hogar1.esBueno())
+	assert.notThat(hogar2.esBueno())
+	assert.that(huerta1.esBueno())
+	assert.notThat(huerta2.esBueno())
+	assert.that(mascota1.esBueno())
+	assert.notThat(mascota2.esBueno())
+	assert.that(mascota3.esBueno())
+	
+	//// prueba del barrio 
+	assert.that(barrio1.esCopado())
+}
+
+test "simulando el ataque de plagas a los elementos"
+{
+	/// Hogares
+	const hogar1 = new Hogar(nivelDeMugre = 14, confort = 30)
+	
+	/// Huertas
+	const huerta1 = new Huerta(capacidadDeProduccion = 100, nivel = 50)
+	
+	/// mascotas 
+	const mascota1 = new Mascotas (nivelDeSalud = 500)
+	
+	
+	//Plagas
+	const cucas = new Cucarachas (poblacion = 20, peso = 8) 
+	const pulgas = new Pulgas (poblacion = 20) 
+	const garrapatas = new Garrapatas(poblacion=5)
+	
+	// daños al hogar 
+	hogar1.esAtacado(cucas)
+	assert.equals(24 , hogar1.nivelDeMugre())
+	// daños a la huerta
+	huerta1.esAtacado(pulgas)
+	assert.equals(86,huerta1.capacidadDeProduccion() )
+	// daños a mascotas 
+	mascota1.esAtacado(garrapatas)
+	assert.equals(500, mascota1.nivelDeSalud())
+}

@@ -1,0 +1,51 @@
+import plagas.*
+import elementos.*
+test "plagas" {
+	
+	const cucas = new Cucarachas (poblacion = 20, peso = 8) 
+	const pulgas = new Pulgas (poblacion = 20) 
+	const garrapatas = new Garrapatas(poblacion=5)
+	const mosquitos = new Mosquitos (poblacion = 50)
+	
+	/// prueba de daño y de trasmicion
+	assert.notThat(cucas.puedeTrasmitir())
+	assert.equals(10, cucas.nivelDeDanio())
+	assert.that(pulgas.puedeTrasmitir())
+	assert.equals(40, pulgas.nivelDeDanio())
+	assert.notThat(garrapatas.puedeTrasmitir())
+	assert.equals(10, garrapatas.nivelDeDanio())
+	assert.notThat(mosquitos.puedeTrasmitir())
+	assert.equals(50, mosquitos.nivelDeDanio())
+	
+
+}
+
+test "efectos en las plagas "
+{
+	/// Hogares
+	const hogar1 = new Hogar(nivelDeMugre = 14, confort = 30)
+	
+	/// Huertas
+	const huerta1 = new Huerta(capacidadDeProduccion = 100, nivel = 50)
+	
+	/// mascotas 
+	const mascota1 = new Mascotas (nivelDeSalud = 500)
+	const cucas = new Cucarachas (poblacion = 20, peso = 8) 
+	const pulgas = new Pulgas (poblacion = 20) 
+	const garrapatas = new Garrapatas(poblacion=5)
+	const mosquitos = new Mosquitos (poblacion = 50)
+	
+	/// efecto sobre cucas 
+	cucas.efectoDeAtaque(hogar1)
+	assert.equals(22, cucas.poblacion())
+	assert.equals(10, cucas.peso())
+	// efecto en pulgas 
+	pulgas.efectoDeAtaque(huerta1)
+	assert.equals(22,pulgas.poblacion())
+	//// efecto en garrapatas
+	garrapatas.efectoDeAtaque(mascota1)
+	assert.equals(6, garrapatas.poblacion())
+	//// efecto en mosquito
+	mosquitos.efectoDeAtaque(hogar1)
+	assert.equals(55,mosquitos.poblacion())
+}
